@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # deployment name
+  # identifies the deployment object in the namespace 
+  name: synergychat-api
+  # you can specify the namespace here too
+  # namespace: staging
+  labels:
+    # labels for the deployment itself (not for pods), helpful for filtering/organizing deployments
+    app: synergychat-api
+# deployment spec
+# defines how many pods to run, how to find the pods and the template to create new pods
+spec:
+  replicas: 1
+  # tells deployment which pods to manage
+  # if you add more labels in the selector, then the deployment will only manage pods that match all of those labels exactly
+  selector:
+    matchLabels:
+      # app is a custom field, you can use other words like project or mycustomlabel
+      app: synergychat-api
+  # template for creating pods
+  template:
+    metadata:
+      # labels for the pods that will be created by the deployment
+      labels:
+        app: synergychat-api
+    # specifies how each individual pod looks like
+    spec:
+      # define the container(s) that will run inside each pod created by the deployment
+      containers:
+        - image: bootdotdev/synergychat-api:latest
+          # container name
+          # identifies the container inside the pod
+          name: synergychat-api
+
